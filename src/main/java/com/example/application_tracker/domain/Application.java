@@ -36,6 +36,10 @@ public class Application {
         this.status = Status.APPLIED;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public Job getJob() {
         return job;
     }

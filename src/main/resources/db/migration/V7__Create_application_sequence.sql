@@ -1,0 +1,2 @@
+CREATE SEQUENCE application_seq START WITH 1 INCREMENT BY 50 CACHE 10;
+GRANT USAGE, SELECT ON SEQUENCE application_seq TO job_searcher;
