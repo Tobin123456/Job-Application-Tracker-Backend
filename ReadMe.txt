@@ -40,12 +40,29 @@ A Spring Boot backend for managing and visualizing job applications. This projec
 - Java 21+
 - PostgreSQL
 
-**Backend:**
-1. Set up the PostgreSQL database and run migrations with Flyway.
+**Setup:**
+1. Set up the PostgreSQL database and automatically run migrations with Flyway:
+ Ensure PostgreSQL is running and configure `application.properties`:
+     - Example configuration for PostgreSQL:
+
+     ```properties
+     spring.datasource.url=jdbc:postgresql://localhost:5432/your_database
+     spring.datasource.username=your_user
+     spring.datasource.password=your_password
+     spring.flyway.enabled=true
+     ```
 2. Run the Spring Boot backend with your IDE or via command line:
    ```bash
    ./mvnw spring-boot:run
-
+   ```
+3. Package the Application into a JAR
+   ```bash
+   ./mvnw clean package
+   ```
+4. Run the Packaged JAR
+    ```bash
+   java -jar target/Application_Tracker-0.0.1-SNAPSHOT.jar
+   ```
 ---
 
 ## API Documentation
