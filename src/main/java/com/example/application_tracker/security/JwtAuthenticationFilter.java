@@ -21,6 +21,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtUtils jwtUtils;
     private final UserDetailsService userDetailsService;
 
+
+    /**
+     * Lazy dependency injection to prevent loading database beans before flyway has applied migrations
+     */
     public JwtAuthenticationFilter(JwtUtils jwtUtils,  @Lazy UserDetailsService userDetailsService) {
         this.jwtUtils = jwtUtils;
         this.userDetailsService = userDetailsService;
