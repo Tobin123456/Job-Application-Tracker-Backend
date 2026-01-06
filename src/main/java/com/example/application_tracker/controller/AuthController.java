@@ -28,7 +28,7 @@ public class AuthController {
         this.jwtUtils = jwtUtils;
     }
 
-    @PostMapping()
+    @PostMapping
     @SecurityRequirement(name = "basicAuth")
     public ResponseLoginDto getToken(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
