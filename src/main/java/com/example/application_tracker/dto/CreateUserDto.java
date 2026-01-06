@@ -1,25 +1,23 @@
 package com.example.application_tracker.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Set;
 
-public class CreateUserDto {
+/**
+ * @param roles roles as a set of strings (e.g., ["ROLE_USER"])
+ */
+public record CreateUserDto(String username, String password, Set<String> roles) {
 
-    private String username;
-
-    private String password;
-
-    private Set<String> roles;  // roles as a set of strings (e.g., ["ROLE_USER"])
-
-    public String getUsername() {
-        return username;
+    @JsonCreator
+    public CreateUserDto(
+            @JsonProperty("username") String username,
+            @JsonProperty("password") String password,
+            @JsonProperty("roles") Set<String> roles
+    ) {
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
     }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public Set<String> getRoles() {
-        return roles;
-    }
-
 }
