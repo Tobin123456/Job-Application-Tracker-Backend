@@ -10,6 +10,7 @@ import com.example.application_tracker.mapper.ApplicationMapper;
 import com.example.application_tracker.repository.ApplicationRepository;
 import com.example.application_tracker.repository.CompanyRepository;
 import com.example.application_tracker.repository.JobRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,6 +58,11 @@ public class ApplicationService {
 
     @Transactional
     public void updateApplicationStatus(UpdateApplicationStatusDto dto) {
-        applicationRepository.findById(dto.appID()).ifPresent(application -> application.setStatus(dto.status()));
+        Application application = applicationRepository.findById(dto.appID())
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Application with ID " + dto.appID() + " not found"
+                ));
+
+        application.setStatus(dto.status());
     }
 }
