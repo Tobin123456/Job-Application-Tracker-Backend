@@ -63,20 +63,20 @@ A Spring Boot backend for persisting, managing, and tracking job applications. T
 The backend exposes server REST endpoints.
 Here is a summary of the main backend endpoints: 
 
-| Endpoint           | Method | Description                       | Auth                  |
-|--------------------|--------|-----------------------------------|-----------------------|
-| `api/applications` | GET    | Get all job applications           | Bearer JWT / Basic    |
-| `api/applications` | POST   | Create a new application           | Bearer JWT / Basic    |
-| `api/applications` | PATCH  | Update the status of an application| Bearer JWT / Basic    |
-| `api/auth`         | POST   | Obtain JWT token using Basic Auth  | Basic                 |
-| `api/users`        | POST   | Register a new user                | None                  |
+| Endpoint                       | Method | Description                       | Auth                  |
+|--------------------------------|--------|-----------------------------------|-----------------------|
+| `api/applications`             | GET    | Get all job applications          | Bearer JWT / Basic    |
+| `api/applications`             | POST   | Create a new application          | Bearer JWT / Basic    |
+| `api/applications/{id]/status` | PATCH  | Update the status of an application| Bearer JWT / Basic    |
+| `api/auth`                     | POST   | Obtain JWT token using Basic Auth | Basic                 |
+| `api/users`                    | POST   | Register a new user               | None                  |
 
 ### Notes
 - **JWT (Bearer) Authentication**: Include the token in the request header as `Authorization: Bearer <token>`.
 - **Basic Authentication**: Use your username and password encoded in Base64 in the `Authorization` header.
 - If an endpoint supports both authentication methods, you can use **either** one to access it.
 - Endpoint paths reflect the controller mappings — adjust them if your actual routes differ.
-- This table covers core functionality. For full API details, see the OpenAPI / Swagger documentation:  
+- This table covers core functionality. For full API details, see the OpenAPI / Swagger documentation after application start:  
   [http://localhost:8080/swagger-ui/index.html#/application-controller](http://localhost:8080/swagger-ui/index.html#/application-controller)
 
 ## Testing

@@ -57,12 +57,11 @@ public class ApplicationService {
     }
 
     @Transactional
-    public void updateApplicationStatus(UpdateApplicationStatusDto dto) {
-        Application application = applicationRepository.findById(dto.appID())
+    public void updateApplicationStatus(Long id, UpdateApplicationStatusDto dto) {
+        Application application = applicationRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
-                        "Application with ID " + dto.appID() + " not found"
+                        "Application with ID " + id + " not found"
                 ));
-
         application.setStatus(dto.status());
     }
 }

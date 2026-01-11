@@ -40,12 +40,13 @@ public class ApplicationController {
         return applicationService.createApplication(dto);
     }
 
-    @PatchMapping
+    @PatchMapping("/{id}/status")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @SecurityRequirement(name = "bearerAuth")
     @SecurityRequirement(name = "basicAuth")
-    public void updateStatus(@Valid @RequestBody UpdateApplicationStatusDto dto) {
-        applicationService.updateApplicationStatus(dto);
+    public void updateStatus(
+            @PathVariable Long id,
+            @RequestBody @Valid UpdateApplicationStatusDto dto) {
+        applicationService.updateApplicationStatus(id, dto);
     }
-
 }
