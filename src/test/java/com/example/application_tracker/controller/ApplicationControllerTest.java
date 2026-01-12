@@ -8,6 +8,7 @@ import com.example.application_tracker.dto.UpdateApplicationStatusDto;
 import com.example.application_tracker.security.JwtUtils;
 import com.example.application_tracker.service.ApplicationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
@@ -19,8 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,12 +40,18 @@ public class ApplicationControllerTest {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    private final Long applicationID = 1234567L;
+
+    @AfterEach
+    void tearDown() {
+        reset(applicationService, jwtUtils);
+    }
 
     @Test
     void shouldReturnAllApplications() throws Exception {
         // given
         ResponseApplicationDto responseDto = new ResponseApplicationDto(
-                1234567L,
+                applicationID,
                 "Backend Developer",
                 "ACME",
                 Application.Status.APPLIED,
@@ -76,7 +82,7 @@ public class ApplicationControllerTest {
         );
 
         ResponseApplicationDto responseDto = new ResponseApplicationDto(
-                1234567L,
+                applicationID,
                 "Backend Developer",
                 "ACME",
                 Application.Status.APPLIED,
@@ -102,14 +108,13 @@ public class ApplicationControllerTest {
     void shouldUpdateStatus() throws Exception {
         // given
         UpdateApplicationStatusDto requestDto = new UpdateApplicationStatusDto(
-                1234567L,
                 Application.Status.INTERVIEW
         );
 
-        doNothing().when(applicationService).updateApplicationStatus(any(UpdateApplicationStatusDto.class));
+        doNothing().when(applicationService).updateApplicationStatus(any(Long.class), any(UpdateApplicationStatusDto.class));
 
         // when + then
-        mockMvc.perform(patch("/api/applications")
+        mockMvc.perform(patch("/api/applications/1234567/status")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(requestDto)))
                 .andExpect(status().isNoContent());

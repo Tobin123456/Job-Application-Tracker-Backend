@@ -113,7 +113,6 @@ public class ApplicationServiceTest {
     void shouldUpdateApplicationStatus() {
         // given
         UpdateApplicationStatusDto statusDto = new UpdateApplicationStatusDto(
-                backendApplication.getId(),
                 Application.Status.INTERVIEW
         );
 
@@ -121,7 +120,7 @@ public class ApplicationServiceTest {
                 .thenReturn(java.util.Optional.of(backendApplication));
 
         // when
-        applicationService.updateApplicationStatus(statusDto);
+        applicationService.updateApplicationStatus(backendApplication.getId(), statusDto);
 
         // then
         assertThat(backendApplication.getStatus()).isEqualTo(Application.Status.INTERVIEW);
@@ -131,7 +130,6 @@ public class ApplicationServiceTest {
     void updateStatusShouldThrowWhenApplicationNotFound() {
         // given
         UpdateApplicationStatusDto statusDto = new UpdateApplicationStatusDto(
-                999L,
                 Application.Status.INTERVIEW
         );
 
@@ -139,7 +137,7 @@ public class ApplicationServiceTest {
                 .thenReturn(java.util.Optional.empty());
 
         // then
-        assertThatThrownBy(() -> applicationService.updateApplicationStatus(statusDto))
+        assertThatThrownBy(() -> applicationService.updateApplicationStatus(999L, statusDto))
                 .isInstanceOf(EntityNotFoundException.class)
                 .hasMessageContaining("Application with ID 999 not found");
     }
