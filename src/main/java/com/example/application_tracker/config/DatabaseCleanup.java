@@ -10,7 +10,7 @@ public class DatabaseCleanup {
     @Bean
     public FlywayMigrationStrategy cleanMigrateStrategy() {
         return flyway -> {
-            flyway.clean();
+            //flyway.clean(); only enable if you want a cleaned database after every start up
             flyway.migrate();
         };
     }
